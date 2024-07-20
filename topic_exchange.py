@@ -14,6 +14,8 @@ channel.exchange_declare(exchange='topic_exchange',
                          exchange_type='topic',durable=True)
 
 #bind queue to exchange
+#match single key starting with #.confirm
+#match all keys starting with tour.*
 channel.queue_bind(queue='topic_queue', exchange='topic_exchange', routing_key='tour.*')
 
 #publish message
@@ -35,4 +37,5 @@ def print_message(channel, method_frame, header_frame, body):
 channel.basic_consume(queue='topic_queue',on_message_callback=print_message)
 
 channel.start_consuming()
-# channel.stop_consuming()
+channel.close()
+connection.close
